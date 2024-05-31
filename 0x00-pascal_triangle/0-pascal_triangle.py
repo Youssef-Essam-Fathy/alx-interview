@@ -1,32 +1,28 @@
 #!/usr/bin/env python3
-"""
-Module 0-pascal_triangle.py
-In this function it will generate pascal triangle
-"""
+from typing import List
 
 
-def fact(numb):
-    """this method will return the factorial of the number"""
-    if numb == 0 or numb == 1:
-        return 1
-    else:
-        pro = 1
-        for i in range(1, numb + 1):
-            pro *= i
-        return pro
-
-
-def pascal_triangle(n):
-    try:
-        if n <= 0:
-            return []
-        else:
-            lists = []
-            for i in range(n):
-                row = []
-                for j in range(i + 1):
-                    row.append(fact(i) // (fact(j) * fact(i - j)))
-                lists.append(row)
-            return lists
-    except Exception:
+def pascal_triangle(n: int) -> List[list]:
+    '''
+    Pascal triangle
+    '''
+    if n <= 0:
         return []
+
+    if n == 1:
+        return [[1]]
+
+    if n == 2:
+        return [[1], [1, 1]]
+
+    triangle = [[1], [1, 1]]
+
+    for i in range(2, n):
+        temp = [1, 1]
+        for j in range(0, len(triangle[-1])-1):
+            a = triangle[-1][j]
+            b = triangle[-1][j+1]
+            temp.insert(-1, a + b)
+        triangle.append(temp)
+
+    return triangle
