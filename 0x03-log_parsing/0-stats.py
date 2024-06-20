@@ -20,17 +20,21 @@ total_file_size = 0
 # Variable to keep track of the number of lines processed
 line_count = 0
 
+
 def print_statistics():
     """Print the statistics of the log parsing."""
     print("File size: {}".format(total_file_size))
     for status_code in sorted(status_code_counts):
         if status_code_counts[status_code] > 0:
-            print("{}: {}".format(status_code, status_code_counts[status_code]))
+            print("{}: {}".format(status_code,
+                                  status_code_counts[status_code]))
+
 
 def signal_handler(sig, frame):
     """Handle keyboard interruption (CTRL + C)."""
     print_statistics()
     sys.exit(0)
+
 
 # Register the signal handler for keyboard interruption
 signal.signal(signal.SIGINT, signal_handler)
@@ -70,4 +74,5 @@ except KeyboardInterrupt:
     sys.exit(0)
 
 # Final print of statistics after all lines are processed
-print_statistics()
+if __name__ == "__main__":
+    print_statistics()
